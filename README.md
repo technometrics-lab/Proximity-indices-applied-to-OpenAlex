@@ -1,2 +1,6 @@
 # Proximity-indices-between-technologies-applied-to-OpenAlex
-Project aiming at measuring the proximity between cybersecurity technologies under the form of time series based on bibliometric data taken from Openalex.
+This projects aims at measuring the proximity between cybersecurity technologies under the form of time series based on bibliometric data taken from Openalex.
+
+The project is divided in 3 parts: the creation of the data, the exploration of the data, and the creation, visualization and forecasting of proximity indices. Each part is contained in one specific folder. Each folder contains a file called "directory_file" + something specific to the specific folder. If you run this file, it runs all the other files contained in this folder in the right order.
+At the same level of the folders, there is a file called "directory_file", which runs all the directory files specific to each folder in the right order. The only thing one has to do, is to download manually "m4_monthly_scaled.pkl" and "m4_monthly_scaled.pkl" from https://github.com/unit8co/amld2022-forecasting-and-metalearning/tree/main/data and to put them in the folder called "indices_proximity". These files are used then for the transfer learning part and I could not download them automatically, because of some technical problems.
+Once this is done, one can simply run the main directory file and then all the files are ran. Note that the whole computations might take approximately a week to be run.
