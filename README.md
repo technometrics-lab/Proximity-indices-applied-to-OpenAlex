@@ -42,7 +42,7 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#installation">Installation and use</a></li>
       </ul>
     </li>
     <li><a href="#contributing">Contributing</a></li>
@@ -59,7 +59,7 @@
 This projects aims at measuring the proximity between cybersecurity technologies under the form of time series based on bibliometric data taken from Openalex.
 
 The project is divided in 3 parts: the creation of the data, the exploration of the data, and the creation, visualization and forecasting of proximity indices. Each part is contained in one specific folder. Each folder contains a file called "directory_file" + something specific to the specific folder. If you run this file, it runs all the other files contained in this folder in the right order.
-At the same level of the folders, there is a file called "directory_file", which runs all the directory files specific to each folder in the right order. The only thing one has to do, is to download manually "m4_monthly_scaled.pkl" and "m4_monthly_scaled.pkl" from https://github.com/unit8co/amld2022-forecasting-and-metalearning/tree/main/data and to put them in the folder called "indices_proximity". These files are used then for the transfer learning part and I could not download them automatically, because of some technical problems.
+At the same level of the folders, there is a file called "directory_file", which runs all the directory files specific to each folder in the right order.
 Once this is done, one can simply run the main directory file and then all the files are ran. Note that the whole computations might take approximately a week to be run.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -97,23 +97,14 @@ Give a list of all the libraries required to run my work.
   npm install npm@latest -g
   ```
 
-### Installation
+### Installation and use
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+1. Download all the folders somewhere in your laptop
+2. Download manually "m4_monthly_scaled.pkl" and "m4_monthly_scaled.pkl" from https://github.com/unit8co/amld2022-forecasting-and-metalearning/tree/main/data and to put them in the folder called "indices_proximity". These files are used then for the transfer learning part and I could not download them automatically, because of some technical problems.
+3. Run "directory_file"
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
