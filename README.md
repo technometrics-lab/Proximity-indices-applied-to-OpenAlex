@@ -91,6 +91,26 @@ Give a list of all the libraries required to run my work.
   ```sh
   npm install npm@latest -g
   ```
+  
+requests~=2.28.1 (conda install requests=2.28.1)
+matplotlib~=3.5.3 (use conda install matplotlib=3.5.3)
+optuna~=2.10.1 (conda install optuna=2.10.1)
+seaborn~=0.12.0 (conda install seaborn=0.12.0)
+scipy~=1.9.3 (conda install scipy=1.9.3)
+scikit-learn~=1.0.2 (conda install scikit-learn=1.0.2)
+darts~=0.21.0 (conda install -c conda-forge darts )
+tslearn~=0.5.2 (conda install tslearn=0.5.2)
+
+torch~=1.13.1 (conda install -c pytorch pytorch)
+yellowbrick~=1.5 (conda install yellowbrick=1.5)
+sktime~=0.14.1 (conda install -c conda-forge sktime)
+
+numpy~=1.22.4 (conda install -c anaconda numpy)
+pandas~=1.4.4 (conda install -c anaconda pandas)
+nltk~=3.7 (conda install -c anaconda nltk)
+tqdm~=4.64.1 (conda install -c conda-forge tqdm)
+keybert~=0.6.0 (pip install keybert)
+
 
 ### Installation and use
 
