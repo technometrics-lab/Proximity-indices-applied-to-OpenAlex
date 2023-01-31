@@ -87,29 +87,76 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 Give a list of all the libraries required to run my work.
-* npm
+* keybert~=0.6.0 
   ```sh
-  npm install npm@latest -g
+  pip install keybert
+  ```
+* tqdm~=4.64.1
+  ```sh
+  conda install -c conda-forge tqdm
+  ```
+* nltk~=3.7
+  ```sh
+  conda install -c anaconda nltk
+  ```
+* pandas~=1.4.4
+  ```sh
+  conda install -c anaconda pandas
+  ```  
+* numpy~=1.22.4
+  ```sh
+  conda install -c anaconda numpy
+  ```
+* sktime~=0.14.1
+  ```sh
+  conda install -c conda-forge sktime
+  ```
+* yellowbrick~=1.5
+  ```sh
+  conda install yellowbrick=1.5
+  ```
+* torch~=1.13.1
+  ```sh
+  conda install -c pytorch pytorch
+  ```
+* tslearn~=0.5.2
+  ```sh
+  conda install tslearn=0.5.2
+  ```
+* darts~=0.21.0
+  ```sh
+  conda install -c conda-forge darts
+  ```
+* scikit-learn~=1.0.2
+  ```sh
+  conda install scikit-learn=1.0.2
+  ```
+* scipy~=1.9.3
+  ```sh
+  conda install scipy=1.9.3
+  ```
+* seaborn~=0.12.0
+  ```sh
+  conda install seaborn=0.12.0
+  ```
+* optuna~=2.10.1
+  ```sh
+  conda install optuna=2.10.1
+  ```
+* matplotlib~=3.5.3
+  ```sh
+  conda install matplotlib=3.5.3
+  ```
+* requests~=2.28.1
+  ```sh
+  conda install requests=2.28.1
   ```
   
-requests~=2.28.1 (conda install requests=2.28.1)
-matplotlib~=3.5.3 (use conda install matplotlib=3.5.3)
-optuna~=2.10.1 (conda install optuna=2.10.1)
-seaborn~=0.12.0 (conda install seaborn=0.12.0)
-scipy~=1.9.3 (conda install scipy=1.9.3)
-scikit-learn~=1.0.2 (conda install scikit-learn=1.0.2)
-darts~=0.21.0 (conda install -c conda-forge darts )
-tslearn~=0.5.2 (conda install tslearn=0.5.2)
 
-torch~=1.13.1 (conda install -c pytorch pytorch)
-yellowbrick~=1.5 (conda install yellowbrick=1.5)
-sktime~=0.14.1 (conda install -c conda-forge sktime)
+  ( )
+ ()
 
-numpy~=1.22.4 (conda install -c anaconda numpy)
-pandas~=1.4.4 (conda install -c anaconda pandas)
-nltk~=3.7 (conda install -c anaconda nltk)
-tqdm~=4.64.1 (conda install -c conda-forge tqdm)
-keybert~=0.6.0 (pip install keybert)
+
 
 
 ### Installation and use
