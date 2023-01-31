@@ -70,10 +70,9 @@ Once this is done, one can simply run the main directory file and then all the f
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-* [![Next][Next.js]][Next-url]
-* Darts [[-->]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
+
+* Darts [-->][darts]
+* Sktime [-->][sktime]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -179,9 +178,8 @@ Use this space to list resources you find helpful and would like to give credit 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://www.bing.com/images/search?view=detailV2&ccid=6sQ85h2c&id=4063ABA1FCDC3D3B39E5CA9421B596A1CBFFDF1D&thid=OIP.6sQ85h2cD1pl90r3pF2B0wAAAA&mediaurl=https%3a%2f%2fuser-images.githubusercontent.com%2f6691888%2f85710962-cc872980-b6b4-11ea-87a4-2d041ac6b5e9.png&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.eac43ce61d9c0f5a65f74af7a45d81d3%3frik%3dHd%252f%252fy6GWtSGUyg%26pid%3dImgRaw%26r%3d0&exph=170&expw=422&q=NumPy+logo&simid=608018123881197192&FORM=IRPRST&ck=3ED4AD1B795BF75F045BE3E676B82790&selectedIndex=10&ajaxhist=0&ajaxserp=0
-[Vue-url]: https://numpy.org/
+
+
+[sktime]: https://www.sktime.org/en/stable/
+[darts]: https://unit8co.github.io/darts/
+
