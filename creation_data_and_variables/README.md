@@ -2,7 +2,12 @@
 
 <a name="readme-top"></a>
 
-This folder contains all the files which create the different pandas dataframes of variables. We explain below the function of each file 
+This folder contains all the files which create the different pandas dataframes of variables. It contains the following folder:
+
+ * data_creation_variable:
+ <br> This folder regroups all the data files which are created by the coding files present in "creation_data_and_variables".
+
+We explain below the function of each file 
 and in the order they are run in directory_file_creation_data:
 
 * scraping_data_from_Open_Alex
