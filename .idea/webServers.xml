@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="dd232425-6dbb-43c9-b33a-b0706075304c" name="cluster">
+        <fileTransfer accessType="SFTP" host="gpulogin.lambda.armasuisse.ch" port="22" sshConfigId="944f6d4f-cd83-45af-8b05-e0bf10bd508b" sshConfig="taal@gpulogin.lambda.armasuisse.ch:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

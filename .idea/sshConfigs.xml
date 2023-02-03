@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="gpulogin.lambda.armasuisse.ch" id="944f6d4f-cd83-45af-8b05-e0bf10bd508b" port="22" nameFormat="DESCRIPTIVE" username="taal" useOpenSSHConfig="true" />
+    </configs>
+  </component>
+</project>

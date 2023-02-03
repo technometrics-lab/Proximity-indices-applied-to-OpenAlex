@@ -16,33 +16,20 @@ from nltk.stem import WordNetLemmatizer
 from nltk.stem.porter import PorterStemmer
 from nltk.stem.snowball import SnowballStemmer
 import string
-
-
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct  6 09:27:15 2022
-
-@author: aless
-"""
-
-from tqdm import tqdm
-import pandas as pd
 import pickle
 import time
 
 
-def get_keywords(dico_keywords):
-    list_keyword = dico_keywords['keyword']
-    return list_keyword
-
-def get_cos_sim(dico_keywords):
-    list_cos_sim = dico_keywords['cosine_similarity']
-    return list_cos_sim
-
-    # I create now my citation dico
-def get_dico_keywords(paper,df_full):
+## This function computes the keywords of a given paper using all functions necessary for that
+def get_dico_keywords(paper,df_full): 
+    
+    # we first define a dictionary that we will fill in
     dicokeywords={'keyword':[],'cosine_similarity':[]}
+    
+    # then we choose the rows of the dataframe related to our papper
     myinfos = df_full.loc[df_full['paper']==paper].copy()
+    
+    #we select the text out of which we will extract our keywords
     abstract = list(set(myinfos.abstract.tolist()))
     title = list(set(myinfos.title.tolist()))
     text = str(title[0] + abstract[0])
@@ -55,8 +42,8 @@ def get_dico_keywords(paper,df_full):
     numberkeywords = len(mykeywords)
 
     # actually mykeywords is a list of tuples
-    # I take every element of the list and then I take the
-    # elements of the tuple I am interested in.
+    # we take every element of the list and then we take the
+    # elements of the tuple we are interested in.
     for y in range(numberkeywords):
         infomykey = mykeywords[y]
         dicokeywords['keyword'].append(infomykey[0])
@@ -64,132 +51,24 @@ def get_dico_keywords(paper,df_full):
     return dicokeywords
 
 
-def create_keywordsdf(listpapers,df_full):
-    dicokeywords = {'paper': [],
-                    'keyword': [],
-                    'cosine_similarity': [],
-                    'publication_date': [],
-                    'year': [],
-                    'month': []}
-
-    specific_paper_df = df_full.loc[listpapers].copy()
-    # I create now my citation dico
-    for paper in listpapers:
-        myinfos = specific_paper_df.loc[[paper]].copy()
-        month = list(set(myinfos.month.tolist()))
-        year = list(set(myinfos.year.tolist()))
-        publication_date = list(set(myinfos.publication_date.tolist()))
-        abstract = list(set(myinfos.abstract.tolist()))
-        title = list(set(myinfos.title.tolist()))
-        text = str(title[0] + abstract[0])
-
-        text_c = clean_text(text)
-
-        # this functions get_keyword take 99.99% of the running time for each loop
-        mykeywords = get_keyword(text_c)
-
-        numberkeywords = len(mykeywords)
-
-        # actually mykeywords is a list of tuples
-        # I take every element of the list and then I take the
-        # elements of the tuple I am interested in.
-        for y in range(numberkeywords):
-            infomykey = mykeywords[y]
-            dicokeywords['keyword'].append(infomykey[0])
-            dicokeywords['cosine_similarity'].append(infomykey[1])
-            dicokeywords['paper'].append(paper)
-            dicokeywords['publication_date'].append(publication_date[0])
-            dicokeywords['year'].append(year[0])
-            dicokeywords['month'].append(month[0])
-    return dicokeywords
-
-def create_dico_concept(listpapers,df_full):
-
-    dicofconcepts = {'paper': [],
-                     'technologies': [],
-                     'score': [],
-                     'publication_date': [],
-                     'year': [],
-                     'month': []}
-
-    specific_paper_df = df_full.loc[listpapers].copy()
-    # I create now my citation dico
-    for paper in listpapers:
-        myinfos = specific_paper_df.loc[[paper]].copy()
-        concepts = myinfos.concepts.tolist()
-        month = list(set(myinfos.month.tolist()))
-        year = list(set(myinfos.year.tolist()))
-        scores = myinfos.score_concepts.tolist()
-        publication_date = list(set(myinfos.publication_date.tolist()))
-
-        numberconcepts = len(concepts)
-
-        # adding the new infos the number of times there are
-        # cited work (since I want to do a dataframe)
-        dicofconcepts['year'] = dicofconcepts['year'] + numberconcepts * year
-        dicofconcepts['month'] = dicofconcepts['month'] + numberconcepts * month
-        dicofconcepts['paper'] = dicofconcepts['paper'] + numberconcepts * [paper]
-        dicofconcepts['publication_date'] = dicofconcepts['publication_date'] + numberconcepts * publication_date
-        dicofconcepts['technologies'] = dicofconcepts['technologies'] + concepts
-        dicofconcepts['score'] = dicofconcepts['score'] + scores
-    return dicofconcepts
-
-def create_cit_basic_noref(listpapers,df_full):
+## This function creates a basic dataframe of citations
+def create_cit_basic(listpapers,df_full): 
+    
+    # we first define a dictionary that we will then fill in.
     mycitationdico = {'citing_paper': [],
                       'cited_paper': [],
                       'publication_date': [],
                       'month': [],
                       'year': []
                       }
-    #time1= time.time()
-    specific_paper_df = df_full.loc[listpapers].copy()
-    #time2=time.time()
-    #print('Time to get the sub data frame '+str(time2-time1))
-    # I create now my citation dico
+    
+    #we select the rows of the dataframe related to our list of papers
+    specific_paper_df = df_full.loc[listpapers]
+
+    # We now generate our citation dico
     for paper in listpapers:
-        #time3 = time.time()
-        myinfos = specific_paper_df.loc[[paper]].copy()
-        #time4 = time.time()
-        #print('Time to get the info for the paper '+str(time4 - time3))
-
-        mycitingworks = myinfos.work_citing_this_paper.tolist()
-        month = list(set(myinfos.month.tolist()))
-        year = list(set(myinfos.year.tolist()))
-        publication_date = list(set(myinfos.publication_date.tolist()))
-
-        numbercitingworks = len(mycitingworks)
-
-        # adding the new infos the number of times there are
-        # cited work (since I want to do a dataframe)
-        mycitationdico['year'] = mycitationdico['year'] + numbercitingworks * year
-        mycitationdico['month'] = mycitationdico['month'] + numbercitingworks * month
-        mycitationdico['publication_date'] = mycitationdico['publication_date'] + numbercitingworks * publication_date
-        mycitationdico['citing_paper'] = mycitationdico['citing_paper'] + mycitingworks
-        mycitationdico['cited_paper'] = mycitationdico['cited_paper'] + numbercitingworks * [paper]
-        #time5 = time.time()
-        #print('Time to get the info for the paper '+str(time5 - time3))
-    #time6 = time.time()
-    #print('Time to get one iterariont out 200 done '+str(time6 - time1))
-    return mycitationdico
-
-
-def create_cit_basic(listpapers,df_full):
-    mycitationdico = {'citing_paper': [],
-                      'cited_paper': [],
-                      'publication_date': [],
-                      'month': [],
-                      'year': []
-                      }
-    #time1= time.time()
-    specific_paper_df = df_full.loc[listpapers].copy()
-    #time2=time.time()
-    #print('Time to get the sub data frame '+str(time2-time1))
-    # I create now my citation dico
-    for paper in listpapers:
-        #time3 = time.time()
-        myinfos = specific_paper_df.loc[[paper]].copy()
-        #time4 = time.time()
-        #print('Time to get the info for the paper '+str(time4 - time3))
+        # We select all the information we want
+        myinfos = specific_paper_df.loc[[paper]]
 
         referenced_works = myinfos.referenced_works.tolist()
         month = list(set(myinfos.month.tolist()))
@@ -198,124 +77,50 @@ def create_cit_basic(listpapers,df_full):
 
         numberrefwork = len(referenced_works)
 
-        # adding the new infos the number of times there are
-        # cited work (since I want to do a dataframe)
+        # We add the new infos the number of times there are cited work (since I want to do a dataframe)
+        # we are aware that there are other ways of doing that in pandas which are more efficient.
+        # nevertheless back then, we did not know anything about it, and for this reason we did it in this way. It works.
+        # It's just not very efficient. We do not have the time anymore to change all the code before the end of the internship.
         mycitationdico['year'] = mycitationdico['year'] + numberrefwork * year
         mycitationdico['month'] = mycitationdico['month'] + numberrefwork * month
         mycitationdico['publication_date'] = mycitationdico['publication_date'] + numberrefwork * publication_date
         mycitationdico['citing_paper'] = mycitationdico['citing_paper'] + numberrefwork * [paper]
         mycitationdico['cited_paper'] = mycitationdico['cited_paper'] + referenced_works
-        #time5 = time.time()
-        #print('Time to get the info for the paper '+str(time5 - time3))
-    #time6 = time.time()
-    #print('Time to get one iterariont out 200 done '+str(time6 - time1))
+
     return mycitationdico
 
-def transform_to_pandas(filtered_data,helpdico,mylistofconcepts,concept_ids):
-    fulldata_df = {'paper': [],
-                   'title': [],
-                   'publication_date': [],
-                   'year': [],
-                   'month': [],
-                   'author': [],
-                   'concepts': [],
-                   'score_concepts': [],
-                   'abstract': [],
-                   'work_citing_this_paper':[]
-                   }
-    for p in filtered_data:
-        # I add a list of authors for this paper
-        # this will be useful later in the code
-        #starting_time = time.time()
-        referenced_works = helpdico[p['id']]
-        citing_works =p['work_citing_this_paper']
 
-        numberauthors = len(p['authorships'])
-        numberconcepts = len(mylistofconcepts)
-        numbercitingworks = len(citing_works)
-
-        listauthors = []
-        for u in range(numberauthors):
-            listauthors.append(p['authorships'][u]['author']['id'])
-
-        myabstract = recreation_abstract(p['abstract_inverted_index'])
-        list_score = compute_list_score(p['concepts'], concept_ids, mylistofconcepts)
-
-        if citing_works == []:
-            numbercitingworks = 1
-            citing_works = ['NaN']
-
-        totalnumber = numberconcepts * numberauthors*numbercitingworks
-
-
-        listofauthors_df = numbercitingworks*numberconcepts * listauthors
-
-        mylistofconcepts_df = []
-        list_score_df = []
-        for c in range(numberconcepts):
-            mylistofconcepts_df = mylistofconcepts_df +  numberauthors * [mylistofconcepts[c]]
-            list_score_df = list_score_df + numberauthors * [list_score[c]]
-
-        mylistofconcepts_df = numbercitingworks*mylistofconcepts_df
-        list_score_df = numbercitingworks*list_score_df
-
-        mycitingworks=[]
-        for j in range(numbercitingworks):
-            mycitingworks = mycitingworks + numberconcepts * numberauthors *[citing_works[j]]
-
-
-        fulldata_df['paper'] = fulldata_df['paper'] + totalnumber * [p['id']]
-        fulldata_df['title'] = fulldata_df['title'] + totalnumber * [p['title']]
-        fulldata_df['year'] = fulldata_df['year'] + totalnumber * [p['year']]
-        fulldata_df['month'] = fulldata_df['month'] + totalnumber * [p['month']]
-        fulldata_df['publication_date'] = fulldata_df['publication_date'] + totalnumber * [p['publication_date']]
-        fulldata_df['abstract'] = fulldata_df['abstract'] + totalnumber * [myabstract]
-
-        fulldata_df['author'] = fulldata_df['author'] + listofauthors_df
-        fulldata_df['concepts'] = fulldata_df['concepts'] + mylistofconcepts_df
-        fulldata_df['score_concepts'] = fulldata_df['score_concepts'] + list_score_df
-        fulldata_df['work_citing_this_paper'] = fulldata_df['work_citing_this_paper'] + mycitingworks
-
-        #ending_time = time.time()
-        #print('Elapsed time :' + str(ending_time - starting_time))
-    return pd.DataFrame(fulldata_df)
-
-def get_citing_works(citing_work,listpaper):
-    new_citing_work=[]
-    for element in citing_work:
-        #print('----------')
-        #print(element)
-        #print(type(element))
-        #print('----------')
-        if str(element) in listpaper:
-            new_citing_work.append(str(element))
-            print('hey')
-    if new_citing_work == []:
-        new_citing_work = ['NaN']
-    return new_citing_work
-
+## This function returns for each paper the list of referenced papers of this paper without all papers that 
+## do not belong to our list of papers (not published between 2002 and 2022 or not related to encryption technologies)
 def get_references(id_paper,helpdico):
     return helpdico[id_paper]
 
+##  this function filters the referenced works of each paper given by "filtered datat" and save it in one dictionary
 def dicowithfilteredref(filtered_data):
     helpdico={}
-    #print('creating the help dico')
     number_papers = len(filtered_data['id'])
+    #I first fill my dictionary putting for each paper all the referenced works associated to it
     for i in range(number_papers):
         paper = filtered_data['id'][i]
         helpdico[paper] = filtered_data['referenced_works'][i]
+        
+    # then I filter the values of this dictionary keeping only the papers related to our studies
     for paper, ref_works in helpdico.items():
         lenrefworks = len(ref_works)
         list_refworks_commontech = []
+        # for each paper, we consider each referenced work. Then we check if it is part of our keys in the dictionary
+        #if it is, then it means that it is part of the papers of our studies. If it is not, then it is not part of 
+        #the papers of our studies and therefore we will not keep it in the list of the referenced works for the paper in question.
         for x in range(lenrefworks):
-            if ref_works[x] in helpdico:
             # I check that the referenced work is in my list of technologies
+            if ref_works[x] in helpdico:
                 list_refworks_commontech.append(ref_works[x])
         helpdico[paper]=list_refworks_commontech
     return helpdico
 
-def get_authors(authorships):
-    # authorships = paper['authorships'] ici
+## This function takes a part of information related to a paper in filtered data and returns the list of authors
+## of the paper in question (the list of OpenAlex ids) to be more specific.
+def get_authors(authorships): 
     numberauthors=len(authorships)
     listauthors = []
     for u in range(numberauthors):
@@ -323,134 +128,87 @@ def get_authors(authorships):
     return listauthors
 
 
+## This function returns the list of authors for a specific paper taking df_full (our dataframe) as an input
 def get_infos_authors(paper,df_full):
     myinfos_forauthors= df_full.loc[df_full['id']==paper].copy()
     listauthors = myinfos_forauthors.author.tolist()
     return listauthors
 
+
+## This function takes a part of information related to a paper in filtered data and returns the list of scores
+## of attribution to all our concepts of the paper in question (if there is no score of attribution to a certain 
+## technology, then we artificially defined this missing score of attribution to be zero.
 def compute_list_score(score_infos):
+    # we define our list of concepts
     mylistofconcepts= ['Authentication protocol', 'Biometrics', 'Blockchain', 'Differential Privacy', 'Digital rights management',
      'Digital signature', 'Disk Encryption', 'Distributed algorithm', 'Electronic voting', 'Functional encryption',
      'Hardware acceleration', 'Hardware security module', 'Hash function', 'Homomorphic encryption',
      'Identity management', 'Key management', 'Link encryption', 'Post-quantum cryptography', 'Public-key cryptography',
      'Quantum key distribution', 'Quantum cryptography', 'Random number generation', 'Symmetric-key algorithm',
      'Threshold cryptosystem', 'Trusted Computing', 'Tunneling protocol', 'Zero-knowledge proof']
-    #score_infos = paper['concepts'] ici
+    # creating an empty dico that I will use later
     mydicofscores = {}
     list_scores = []
-    # creating an empty dico that I will use later
+    
+    # we first fill our dictionary with zeroes and then replace these zeroes with the information we have.
+    # if we do not have any information, then it remains zero, just as wanted.
     for concept in mylistofconcepts :
         mydicofscores[concept] = 0
-
+    
+    # we go over all the concepts that are present in the part of information from filtered data
     for notion in score_infos:
+        # if the concept in question is part of our list of concepts
         if notion['display_name'] in mylistofconcepts:
-            # in this case I update the value of mydicofscores
+            # then in this case we update the value of mydicofscores
             mydicofscores[notion['display_name']] = notion['score']
-    # since the keys of my dico dicoofconcepts are in the order of the list of concepts
-    # this is fine and I have everything in good order! I put the score in my dico of concepts
+        # in the other case we do not do anything since this is not our intentions
+        
+    # since the keys of our dico dicoofconcepts are in the order of the list of concepts
+    # this is fine and we have everything in good order for further computations.
     for key, scores in mydicofscores.items():
         list_scores.append(scores)
     return list_scores
 
-def recreation_abstract(abstract_infos):
-    # abstract_infos = paper['abstract_inverted_index'] ici
+
+## This function recreates the abstract from an index which gives every word of the abstract and 
+## what is its place in the abstract
+def recreation_abstract(abstract_infos): 
+
     mylistofcounts = []
+    # we first figure out whether we have an abstract or not
     if abstract_infos == None or abstract_infos == {}:
         myabstract = '--'
-        # it means no abstract. This is cancelled anyway by Jacques functions
+        # it means no abstract. This is cancelled anyway by the functions of text processing below which the punctuation
     else:
+        #once we have an index of the abstract we recreate the abstract
         myabstract = ''
+        # we first create a list of the places of all the words in the abstract
         for keywords, count in abstract_infos.items():
             mylistofcounts = mylistofcounts + count
-
+        
+        # we compute the length of the abstract and create an empty list that we will fill in progressively out 
+        # with all the words present in the abstract
         lengthabstract = max(mylistofcounts) + 1  # since the count starts by zero
         listforabstract = lengthabstract * [0]
+        
+        #We do now put every word at the right place in the list.
         for keyword, count in abstract_infos.items():
             for index in count:
                 listforabstract[index] = keyword
+                
+        # In the end we transform the list into the original abstract        
         for word in listforabstract:
             if word != 0 and type(word) == str:
-                # I take only the words themselves
-                # the zeroes are not what I want of course
+                # We take only the words themselves without the zeroes which might still be there
                 myabstract = myabstract + ' ' + str(word)
     return myabstract
 
 
-def transform_to_pandas_ref(filtered_data,helpdico,mylistofconcepts,concept_ids):
-    fulldata_df = {'paper': [],
-                   'title': [],
-                   'publication_date': [],
-                   'year': [],
-                   'month': [],
-                   'author': [],
-                   'referenced_work': [],
-                   'concepts': [],
-                   'score_concepts': [],
-                   'abstract': []
-                   }
-    for p in filtered_data:
-        # I add a list of authors for this paper
-        # this will be useful later in the code
-        #starting_time = time.time()
-        referenced_works = helpdico[p['id']]
-        citing_works =p['work_citing_this_paper']
-
-        numberauthors = len(p['authorships'])
-        numberrefwork = len(referenced_works)
-        numberconcepts = len(mylistofconcepts)
-
-        listauthors = []
-        for u in range(numberauthors):
-            listauthors.append(p['authorships'][u]['author']['id'])
-
-        myabstract = recreation_abstract(p['abstract_inverted_index'])
-        list_score = compute_list_score(p['concepts'], concept_ids, mylistofconcepts)
-
-        if referenced_works == []:
-            numberrefwork = 1
-            referenced_works = ['NaN']
-
-        totalnumber = numberrefwork * numberconcepts * numberauthors
-
-        listofauthors_1 = []
-        for b in range(numberauthors):
-            listofauthors_1 = listofauthors_1 + numberrefwork * [listauthors[b]]
-
-        listofauthors_df = numberconcepts * listofauthors_1
-
-        mylistofconcepts_df = []
-        list_score_df = []
-        for c in range(numberconcepts):
-            mylistofconcepts_df = mylistofconcepts_df + numberrefwork * numberauthors * [mylistofconcepts[c]]
-            list_score_df = list_score_df + numberrefwork * numberauthors * [list_score[c]]
-
-        mylistofconcepts_df = mylistofconcepts_df
-        list_score_df = list_score_df
-
-
-        fulldata_df['paper'] = fulldata_df['paper'] + totalnumber * [p['id']]
-        fulldata_df['title'] = fulldata_df['title'] + totalnumber * [p['title']]
-        fulldata_df['year'] = fulldata_df['year'] + totalnumber * [p['year']]
-        fulldata_df['month'] = fulldata_df['month'] + totalnumber * [p['month']]
-        fulldata_df['publication_date'] = fulldata_df['publication_date'] + totalnumber * [p['publication_date']]
-        fulldata_df['abstract'] = fulldata_df['abstract'] + totalnumber * [myabstract]
-        fulldata_df['referenced_work'] = fulldata_df['referenced_work'] + numberconcepts * numberauthors * referenced_works
-
-        fulldata_df['author'] = fulldata_df['author'] + listofauthors_df
-        fulldata_df['concepts'] = fulldata_df['concepts'] + mylistofconcepts_df
-        fulldata_df['score_concepts'] = fulldata_df['score_concepts'] + list_score_df
-
-        #ending_time = time.time()
-        #print('Elapsed time :' + str(ending_time - starting_time))
-    return fulldata_df
-
-
-
-
-def myfunctionindex(mycitationlist):
+## this function computes the h-index of an author based on a list of citations for each work he published
+def myfunctionindex(mycitationlist): 
     if mycitationlist == []:
         return 0
-        # we give 0 and we might change this later in the computations if necessary.
+        # we give 0.
     else:
         citations = np.array(mycitationlist)
         n = citations.shape[0]
@@ -464,7 +222,45 @@ def myfunctionindex(mycitationlist):
 
         return h_idx
 
-def compute_h_indices(listofauthor,dfauthorcit,myyears,mymonths):
+    
+## This function returns for a list of papers a dictionary containing the paper, technological concepts
+## the score of attribution of the paper to these concepts, the publication date and so on.
+def create_dico_concept(listpapers,df_full):
+
+    dicofconcepts = {'paper': [],
+                     'technologies': [],
+                     'score': [],
+                     'publication_date': [],
+                     'year': [],
+                     'month': []}
+
+    specific_paper_df = df_full.loc[listpapers].copy()
+    # We create now our citation dico
+    for paper in listpapers:
+        # we first choose all our information
+        myinfos = specific_paper_df.loc[[paper]].copy()
+        concepts = myinfos.concepts.tolist()
+        month = list(set(myinfos.month.tolist()))
+        year = list(set(myinfos.year.tolist()))
+        scores = myinfos.score_concepts.tolist()
+        publication_date = list(set(myinfos.publication_date.tolist()))
+
+        numberconcepts = len(concepts)
+
+        # adding the new infos the number of times there are 
+        # technological concepts (since we want to do a dataframe)
+        dicofconcepts['year'] = dicofconcepts['year'] + numberconcepts * year
+        dicofconcepts['month'] = dicofconcepts['month'] + numberconcepts * month
+        dicofconcepts['paper'] = dicofconcepts['paper'] + numberconcepts * [paper]
+        dicofconcepts['publication_date'] = dicofconcepts['publication_date'] + numberconcepts * publication_date
+        dicofconcepts['technologies'] = dicofconcepts['technologies'] + concepts
+        dicofconcepts['score'] = dicofconcepts['score'] + scores
+    return dicofconcepts
+    
+    
+## This function returns for a given list of author a pandas dataframe containing in each row several information about 
+## the different kinds of H-indices, which are computed.
+def compute_h_indices(listofauthor,dfauthorcit,myyears,mymonths): 
     dico_h_indices = {'author': [],
                       'year': [],
                       'month': [],
@@ -473,17 +269,17 @@ def compute_h_indices(listofauthor,dfauthorcit,myyears,mymonths):
                       'monthly_H_index_incremental': [],
                       'monthly_H_index_notincremental': []
                       }
-
+    # we first select only the rows related to a list of authors
     specificauthorcit = dfauthorcit.loc[dfauthorcit['author'].isin(listofauthor)].copy()
     for author in listofauthor:
-        # find a way like for last doc to change this line of code
-        # it takes 98% of the time for each iteration of the loop
+        # we then select the rows related a specific author
         infomyauthor = specificauthorcit.loc[specificauthorcit['author']==author].copy()
         for year in myyears:
             infosyear = infomyauthor.loc[infomyauthor['year'] == year]
             for month in mymonths:
                 infosmonth = infosyear.loc[infosyear['month'] == month]
-
+                
+                # once all the subsets of the dataframe were selected, we take the information we want
                 listcitfortheyear = infosmonth.citfortheyear.tolist()
                 listcituptothistime_year = infosmonth.cituptothistime_year.tolist()
                 listcituptothistime_month = infosmonth.cituptothistime_month.tolist()
@@ -492,7 +288,8 @@ def compute_h_indices(listofauthor,dfauthorcit,myyears,mymonths):
                 dico_h_indices['author'].append(author)
                 dico_h_indices['year'].append(year)
                 dico_h_indices['month'].append(month)
-
+                
+                #we now compute the several h-indices and add them to our dictionary
                 dico_h_indices['yearly_H_index_notincremental'].append(myfunctionindex(listcitfortheyear))
                 dico_h_indices['yearly_H_index_incremental'].append(myfunctionindex(listcituptothistime_year))
                 dico_h_indices['monthly_H_index_incremental'].append(myfunctionindex(listcituptothistime_month))
@@ -501,6 +298,7 @@ def compute_h_indices(listofauthor,dfauthorcit,myyears,mymonths):
     return mydf
 
 
+## In this function we create a dictionary containing information such as the paper, the authors and the count of citations.
 def creating_dfcit_byauthors_full(listofpaper,df_full,dfcitations):
     finalauthorcitation = {'paper': [],
                            'author': [],
@@ -510,13 +308,17 @@ def creating_dfcit_byauthors_full(listofpaper,df_full,dfcitations):
                            'cituptothistime_month': [],
                            'citforthemonth': [],
                            'citfortheyear': []}
+    #we select the subsets of rows of the dataframe
     specificdfcit = dfcitations.loc[dfcitations['paper'].isin(listofpaper)]
     myspecificinfos = df_full.loc[df_full['paper'].isin(listofpaper)]
+    
+    # we now add the information for each paper we have.
     for paper in listofpaper:
-        infopaper = specificdfcit.loc[specificdfcit['paper']==paper].copy()
-        myinfos_forauthors= myspecificinfos.loc[myspecificinfos['paper']==paper].copy()
-
-        # all the lists I need
+        
+        # we select the information for each specific paper
+        infopaper = specificdfcit.loc[specificdfcit['paper']==paper]
+        myinfos_forauthors= myspecificinfos.loc[myspecificinfos['paper']==paper]
+        
         listauthors = myinfos_forauthors.author.tolist()
 
         listmonth = infopaper.month.tolist()
@@ -526,6 +328,8 @@ def creating_dfcit_byauthors_full(listofpaper,df_full,dfcitations):
         listcituptothistime_month = infopaper.cituptothistime_month.tolist()
         listcitfortheyear = infopaper.citfortheyear.tolist()
         listcitforthemonth = infopaper.citforthemonth.tolist()
+        
+        # we now add them all the right number of time to get everything right to turn it into a pandas dataframe.
         mylen = len(listmonth)
 
         finalauthorcitation['paper'] = finalauthorcitation['paper'] + mylen * [paper]
@@ -534,61 +338,17 @@ def creating_dfcit_byauthors_full(listofpaper,df_full,dfcitations):
         finalauthorcitation['month'] = finalauthorcitation['month'] + listmonth
         finalauthorcitation['year'] = finalauthorcitation['year'] + listyear
 
-        finalauthorcitation['cituptothistime_year'] = finalauthorcitation['cituptothistime_year'] \
-                                                          + listcituptothistime_year
-        finalauthorcitation['cituptothistime_month'] = finalauthorcitation['cituptothistime_month'] \
-                                                           + listcituptothistime_month
+        finalauthorcitation['cituptothistime_year'] = finalauthorcitation['cituptothistime_year'] + listcituptothistime_year
+        finalauthorcitation['cituptothistime_month'] = finalauthorcitation['cituptothistime_month'] + listcituptothistime_month
         finalauthorcitation['citforthemonth'] = finalauthorcitation['citforthemonth'] + listcitforthemonth
         finalauthorcitation['citfortheyear'] = finalauthorcitation['citfortheyear'] + listcitfortheyear
     mydf = pd.DataFrame(finalauthorcitation)
     return mydf
 
 
-def creating_dfcit_byauthors(listofpaper,df_full,dfcitations):
-    finalauthorcitation = {'paper': [],
-                           'author': [],
-                           'year': [],
-                           'month': [],
-                           'cituptothistime_year': [],
-                           'cituptothistime_month': [],
-                           'citforthemonth': [],
-                           'citfortheyear': []}
-    specificdfcit = dfcitations.loc[listofpaper].copy()
-    myspecificinfos = df_full.loc[listofpaper].copy()
-    for paper in listofpaper:
-        infopaper = specificdfcit.loc[[paper]].copy()
-        myinfos_forauthors= myspecificinfos.loc[[paper]].copy()
 
-        # all the lists I need
-        listauthors = myinfos_forauthors.author.tolist()
-
-        listmonth = infopaper.month.tolist()
-        listyear = infopaper.year.tolist()
-
-        listcituptothistime_year = infopaper.cituptothistime_year.tolist()
-        listcituptothistime_month = infopaper.cituptothistime_month.tolist()
-        listcitfortheyear = infopaper.citfortheyear.tolist()
-        listcitforthemonth = infopaper.citforthemonth.tolist()
-        mylen = len(listmonth)
-
-        # I obtain a dataframe and I want only a list of authors
-        for author in listauthors:
-            finalauthorcitation['paper'] = finalauthorcitation['paper'] + mylen * [paper]
-            finalauthorcitation['author'] = finalauthorcitation['author'] + mylen * [author]
-
-            finalauthorcitation['month'] = finalauthorcitation['month'] + listmonth
-            finalauthorcitation['year'] = finalauthorcitation['year'] + listyear
-
-            finalauthorcitation['cituptothistime_year'] = finalauthorcitation['cituptothistime_year'] \
-                                                          + listcituptothistime_year
-            finalauthorcitation['cituptothistime_month'] = finalauthorcitation['cituptothistime_month'] \
-                                                           + listcituptothistime_month
-            finalauthorcitation['citforthemonth'] = finalauthorcitation['citforthemonth'] + listcitforthemonth
-            finalauthorcitation['citfortheyear'] = finalauthorcitation['citfortheyear'] + listcitfortheyear
-    return finalauthorcitation
-
-
-def creating_dfcit(myyears,mymonths,dfcitbasic,listofpaper):
+## This function creates a pandas dataframe containing different kinds of counts of citations for papers
+def creating_dfcit(myyears,mymonths,dfcitbasic,listofpaper): 
     finaldicocitation = {'paper': [],
                          'year': [],
                          'month': [],
@@ -597,27 +357,25 @@ def creating_dfcit(myyears,mymonths,dfcitbasic,listofpaper):
                          'citforthemonth': [],
                          'citfortheyear': []
                          }
-    specificpaperscit = dfcitbasic.loc[dfcitbasic['cited_paper'].isin(listofpaper)].copy()
+    #we select the subsets of rows of the dataframe
+    specificpaperscit = dfcitbasic.loc[dfcitbasic['cited_paper'].isin(listofpaper)]
     for paper in listofpaper:
-        # finaldicocitation['citfortheyear'].append(1)
-        # finaldicocitation['cituptothistime_year'].append(1)
-        # finaldicocitation['cituptothistime_month'].append(1)
-        # finaldicocitation['citforthemonth'].append(1)
-        # finaldicocitation['paper'].append(paper)
-        # finaldicocitation['year'].append(1)
-        # finaldicocitation['month'].append(1)
-
+        
+        # we select the information for each specific paper
+        citingpapers = specificpaperscit.loc[specificpaperscit['cited_paper'] == paper]
+        
+        #we set up different variables we will use later
         mypreviousyearcit = 0
         myincrementalvalue = 0
-        # I want to increment the value of citations in 'cituptothistime'
-        citingpapers = specificpaperscit.loc[specificpaperscit['cited_paper'] == paper].copy()
-        #print(citingpapers.year.tolist())
+       
         for year in myyears:
-            # I reduce my selection of citing paper to the year I am considering
+            # We reduce our selection of citing paper to the year we are considering
             # this will make everything run much faster!
-            infosyear = citingpapers.loc[citingpapers['year'] == year].copy()
+            infosyear = citingpapers.loc[citingpapers['year'] == year]
+            
             for month in mymonths:
-                infosmonth = infosyear.loc[infosyear['month'] == month].copy()
+                infosmonth = infosyear.loc[infosyear['month'] == month]
+                
                 # we compute the number of citations for this specific month
                 numbercit = len(infosmonth)
                 myincrementalvalue = myincrementalvalue + numbercit
@@ -626,33 +384,29 @@ def creating_dfcit(myyears,mymonths,dfcitbasic,listofpaper):
                 finaldicocitation['paper'].append(paper)
                 finaldicocitation['year'].append(year)
                 finaldicocitation['month'].append(month)
-
+                   
+                # we add the yearly information only once a year, at the end of the year.
                 if month == 'December':
-                    # I add 12 times my incremental value to the list of cituptothis_year citations
+                    # We add 12 times the incremental value to the list of cituptothis_year citations
                     finaldicocitation['cituptothistime_year'] = \
                     finaldicocitation['cituptothistime_year'] + 12 * [myincrementalvalue]
-                    # For a paper I can take cituptothistime of the end of the year -
+                    
+                    # For a paper, we can take cituptothistime of the end of the year -
                     # cituptothistime of the previous years, this will
-                    # give me all the citations received over the year by this paper
+                    # give us all the citations received over the year by this paper
                     citfortheyear = myincrementalvalue - mypreviousyearcit
                     finaldicocitation['citfortheyear'] = \
                     finaldicocitation['citfortheyear'] + 12 * [citfortheyear]
                     mypreviousyearcit = myincrementalvalue
-    res = list(set(listofpaper) & set(finaldicocitation['paper']))
-    print("length common list is: "+str(len(res)))
-    print("length first list is: " + str(len(listofpaper)))
-    print("length second list is: " + str(len(list(set(finaldicocitation['paper'])))))
+                    
+    # this is just to check that both lists are the same, which should be indeed the case.                
+    #res = list(set(listofpaper) & set(finaldicocitation['paper']))
+    #print("length common list is: "+str(len(res)))
+    #print("length first list is: " + str(len(listofpaper)))
+    #print("length second list is: " + str(len(list(set(finaldicocitation['paper'])))))
+    
     mydf = pd.DataFrame(finaldicocitation)
     return(mydf)
-    #mydf.to_pickle(file_name)
-
-
-
-
-# we are computing the H-index on the basis of the paper there are on openalex
-# and that are related to these technologies (encryption technologies), 
-# not necessarily the H-index overall written paper of the author
-# justify this choice in the paper. 
 
 
 
@@ -661,7 +415,8 @@ lemmatizer = WordNetLemmatizer()
 porter_stemmer = PorterStemmer()
 kw_model = KeyBERT()
 
-
+## all the functions below process and clean the text in order to prepare it for the keyword extraction.
+## they all are quite explicit, more information and documentation can be easily found on the internet.
 def tokenization(text):
     text_token = nltk.tokenize.word_tokenize(text)
     return text_token
@@ -683,7 +438,7 @@ def snow_stemming(text):
     sentence_clean = ' '.join(w for w in text_stem)
     return sentence_clean
 
-def clean_text(text):
+def clean_text(text): ##
     return snow_stemming(lowering(remove_punctuation(text)))
 
 def clean_texts(texts):
@@ -694,11 +449,11 @@ def clean_texts(texts):
 
 
 
-def get_keyword(text):
+def get_keyword(text): ##
     return kw_model.extract_keywords(text)
 
 
-def get_keywords(texts):
+def get_keywords(texts): ##
     keywords_per_doc = list()
     
     for t in tqdm(texts):
