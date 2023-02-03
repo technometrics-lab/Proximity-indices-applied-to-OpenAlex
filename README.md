@@ -79,11 +79,11 @@ Nevertheless, some libraries must be installed before running the main directory
 The repository contains several folders each dedicated to specific task of the project.
 
 * creation_data_and_variables
- </li> This folder contains all the files which create the different pandas dataframes of variables.
+ <br> This folder contains all the files which create the different pandas dataframes of variables.
 * exploratory_analysis
- </li> This folder contains all the files which explore and visualize the data generated in the previous folder.
+ <br> This folder contains all the files which explore and visualize the data generated in the previous folder.
 * indices_proximity
- </li> This folder contains all the files which generate, explore, visualize, process, cluster and forecast time series of 
+ <br> This folder contains all the files which generate, explore, visualize, process, cluster and forecast time series of 
  indices of technological proximity.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
