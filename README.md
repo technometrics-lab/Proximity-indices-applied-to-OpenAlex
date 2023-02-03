@@ -72,7 +72,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 * Darts [-->][darts]
 * Sktime [-->][sktime]
-* Scipy [-->] [scipy]
+* Scipy [-->][scipy]
 * Keybert [-->][keybert]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
