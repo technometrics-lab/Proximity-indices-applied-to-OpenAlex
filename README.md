@@ -58,9 +58,9 @@
 
 This projects aims at measuring the proximity between cybersecurity technologies under the form of time series based on bibliometric data taken from Openalex.
 
-The project is divided in 3 parts: the creation of the data, the exploration of the data, and the creation, visualization and forecasting of proximity indices. Each part is contained in one specific folder. Each folder contains a file called "directory_file" + something specific to the specific folder. If you run this file, it runs all the other files contained in this folder in the right order.
-At the same level of the folders, there is a file called "directory_file", which runs all the directory files specific to each folder in the right order.
-Once this is done, one can simply run the main directory file and then all the files are ran. Note that the whole computations might take approximately a week to be run.
+The project is divided in 3 parts: the creation of the data, the exploration of the data, and the creation, visualization and forecasting of proximity indices. Each part is contained in one specific folder. Each folder contains a file called "directory_file". If you run this file, it runs all the other files contained in this folder in the right order.
+The first file called "directory_file", which is to be found at the same level than the first folders, runs all the particular directory files specific to each folder in the right order.
+Nevertheless, some libraries must be installed before running the main directory file. This can be found in "getting started".
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -70,9 +70,11 @@ Once this is done, one can simply run the main directory file and then all the f
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
+
+* Darts [-->][darts]
+* Sktime [-->][sktime]
+* Scipy [-->] [scipy]
+* Keybert [-->][keybert]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -81,24 +83,85 @@ This section should list any major frameworks/libraries used to bootstrap your p
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
 Give a list of all the libraries required to run my work.
-* npm
+* keybert~=0.6.0 
   ```sh
-  npm install npm@latest -g
+  pip install keybert
   ```
+* tqdm~=4.64.1
+  ```sh
+  conda install -c conda-forge tqdm
+  ```
+* nltk~=3.7
+  ```sh
+  conda install -c anaconda nltk
+  ```
+* pandas~=1.4.4
+  ```sh
+  conda install -c anaconda pandas
+  ```  
+* numpy~=1.22.4
+  ```sh
+  conda install -c anaconda numpy
+  ```
+* sktime~=0.14.1
+  ```sh
+  conda install -c conda-forge sktime
+  ```
+* yellowbrick~=1.5
+  ```sh
+  conda install yellowbrick=1.5
+  ```
+* torch~=1.13.1
+  ```sh
+  conda install -c pytorch pytorch
+  ```
+* tslearn~=0.5.2
+  ```sh
+  conda install tslearn=0.5.2
+  ```
+* darts~=0.21.0
+  ```sh
+  conda install -c conda-forge darts
+  ```
+* scikit-learn~=1.0.2
+  ```sh
+  conda install scikit-learn=1.0.2
+  ```
+* scipy~=1.9.3
+  ```sh
+  conda install scipy=1.9.3
+  ```
+* seaborn~=0.12.0
+  ```sh
+  conda install seaborn=0.12.0
+  ```
+* optuna~=2.10.1
+  ```sh
+  conda install optuna=2.10.1
+  ```
+* matplotlib~=3.5.3
+  ```sh
+  conda install matplotlib=3.5.3
+  ```
+* requests~=2.28.1
+  ```sh
+  conda install requests=2.28.1
+  ```
+  
 
 ### Installation and use
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Download all the folders somewhere in your laptop
+1. Download all the folders in your laptop
 2. Download manually "m4_monthly_scaled.pkl" and "m4_monthly_scaled.pkl" from https://github.com/unit8co/amld2022-forecasting-and-metalearning/tree/main/data and to put them in the folder called "indices_proximity". These files are used then for the transfer learning part and I could not download them automatically, because of some technical problems.
-3. Run "directory_file"
+3. Download all the libraries mentionned above.
+4. Once this is done, one can simply run the main directory file and then all the files are ran. Note that the whole computations might take approximately a week to be run.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -122,40 +185,12 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Alessandro Tavazzi - tavazale@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+Project Link: [https://github.com/technometrics-lab/Proximity-indices-applied-to-OpenAlex](https://github.com/technometrics-lab/Proximity-indices-applied-to-OpenAlex)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -178,9 +213,9 @@ Use this space to list resources you find helpful and would like to give credit 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://www.bing.com/images/search?view=detailV2&ccid=6sQ85h2c&id=4063ABA1FCDC3D3B39E5CA9421B596A1CBFFDF1D&thid=OIP.6sQ85h2cD1pl90r3pF2B0wAAAA&mediaurl=https%3a%2f%2fuser-images.githubusercontent.com%2f6691888%2f85710962-cc872980-b6b4-11ea-87a4-2d041ac6b5e9.png&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.eac43ce61d9c0f5a65f74af7a45d81d3%3frik%3dHd%252f%252fy6GWtSGUyg%26pid%3dImgRaw%26r%3d0&exph=170&expw=422&q=NumPy+logo&simid=608018123881197192&FORM=IRPRST&ck=3ED4AD1B795BF75F045BE3E676B82790&selectedIndex=10&ajaxhist=0&ajaxserp=0
-[Vue-url]: https://numpy.org/
+
+
+[sktime]: https://www.sktime.org/en/stable/
+[darts]: https://unit8co.github.io/darts/
+[scipy]: https://scipy.org/
+[keybert]: https://pypi.org/project/keybert/
