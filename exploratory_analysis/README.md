@@ -2,7 +2,13 @@
 
 <a name="readme-top"></a>
 
-This folder contains all the files which explore the different pandas dataframes we created previously. We explain below the function of each file in the order they are run in directory_file_dataexploration:
+This folder contains all the files which explore the different pandas dataframes we created previously. It contains the following folder:
+
+* data_exploratory_analysis:
+ <br> This folder regroups all the data files which are created by the coding files present in "data_exploratory_analysis".
+
+
+We explain below the function of each file in the order they are run in directory_file_dataexploration:
 
 * dataexploration_citations
  <br> This file explores and visualizes in different ways the data about citations.
