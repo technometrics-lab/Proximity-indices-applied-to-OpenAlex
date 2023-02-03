@@ -58,9 +58,9 @@
 
 This projects aims at measuring the proximity between cybersecurity technologies under the form of time series based on bibliometric data taken from Openalex.
 
-The project is divided in 3 parts: the creation of the data, the exploration of the data, and the creation, visualization and forecasting of proximity indices. Each part is contained in one specific folder. Each folder contains a file called "directory_file" + something specific to the specific folder. If you run this file, it runs all the other files contained in this folder in the right order.
-At the same level of the folders, there is a file called "directory_file", which runs all the directory files specific to each folder in the right order.
-Once this is done, one can simply run the main directory file and then all the files are ran. Note that the whole computations might take approximately a week to be run.
+The project is divided in 3 parts: the creation of the data, the exploration of the data, and the creation, visualization and forecasting of proximity indices. Each part is contained in one specific folder. Each folder contains a file called "directory_file". If you run this file, it runs all the other files contained in this folder in the right order.
+The first file called "directory_file", which is to be found at the same level than the first folders, runs all the particular directory files specific to each folder in the right order.
+Nevertheless, some libraries must be installed before running the main directory file. This can be found in "getting started".
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -81,7 +81,6 @@ This section should list any major frameworks/libraries used to bootstrap your p
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
@@ -157,9 +156,10 @@ Give a list of all the libraries required to run my work.
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Download all the folders somewhere in your laptop
+1. Download all the folders in your laptop
 2. Download manually "m4_monthly_scaled.pkl" and "m4_monthly_scaled.pkl" from https://github.com/unit8co/amld2022-forecasting-and-metalearning/tree/main/data and to put them in the folder called "indices_proximity". These files are used then for the transfer learning part and I could not download them automatically, because of some technical problems.
-3. Run "directory_file"
+3. Download all the libraries mentionned above.
+4. Once this is done, one can simply run the main directory file and then all the files are ran. Note that the whole computations might take approximately a week to be run.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -196,9 +196,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Alessandro Tavazzi - tavazale@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/technometrics-lab/Proximity-indices-applied-to-OpenAlex](https://github.com/technometrics-lab/Proximity-indices-applied-to-OpenAlex)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
