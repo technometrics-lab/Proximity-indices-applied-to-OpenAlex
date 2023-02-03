@@ -73,6 +73,8 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 * Darts [-->][darts]
 * Sktime [-->][sktime]
+* Scipy [-->] [scipy]
+* Keybert [-->][keybert]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -183,16 +185,6 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
 ## Contact
 
@@ -225,4 +217,5 @@ Project Link: [https://github.com/technometrics-lab/Proximity-indices-applied-to
 
 [sktime]: https://www.sktime.org/en/stable/
 [darts]: https://unit8co.github.io/darts/
-
+[scipy]: https://scipy.org/
+[keybert]: https://pypi.org/project/keybert/
