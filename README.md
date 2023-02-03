@@ -56,10 +56,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This projects aims at measuring the proximity between cybersecurity technologies under the form of time series based on bibliometric data taken from Openalex.
+This projects aims at creating and measuring the evolution of the proximity between cybersecurity technologies under the form of time series based on bibliometric (text mining) data taken from Openalex.
 
-The project is divided in 3 parts: the creation of the data, the exploration of the data, and the creation, visualization and forecasting of proximity indices. Each part is contained in one specific folder. Each folder contains a file called "directory_file". If you run this file, it runs all the other files contained in this folder in the right order.
-The first file called "directory_file", which is to be found at the same level than the first folders, runs all the particular directory files specific to each folder in the right order.
+The project is divided in 3 parts: (i) the collection of raw data, (ii) the exploration and transformation (EDA) of the data, and (iii) the creation, visualization and forecasting of proximity indices (extracted from raw data). Each part is contained in one specific folder. Each folder contains a file called "directory_file". If you run this file, it runs all the other files contained in the folder (in the right order).
 Nevertheless, some libraries must be installed before running the main directory file. This can be found in "getting started".
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
