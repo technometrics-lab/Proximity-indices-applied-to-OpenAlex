@@ -67,13 +67,24 @@ Nevertheless, some libraries must be installed before running the main directory
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-
 * Darts [-->][darts]
 * Sktime [-->][sktime]
 * Scipy [-->][scipy]
 * Keybert [-->][keybert]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Structure of the repository
+
+The repository contains several folders each dedicated to specific task of the project.
+
+* creation_data_and_variables
+ This folder contains all the files which create the different pandas dataframes of variables.
+* exploratory_analysis
+ This folder contains all the files which explore and visualize the data generated in the previous folder.
+* indices_proximity
+ This folder contains all the files which generate, explore, visualize, process, cluster and forecast time series of 
+ indices of technological proximity.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
