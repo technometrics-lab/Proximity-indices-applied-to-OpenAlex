@@ -2,8 +2,7 @@
 
 <a name="readme-top"></a>
 
-This folder contains all the files which create the different pandas dataframes of variables. We explain below the function of each file 
-and in the order they are run in directory_file_dataexploration:
+This folder contains all the files which explore the different pandas dataframes we created previously. We explain below the function of each file in the order they are run in directory_file_dataexploration:
 
 * dataexploration_citations
  <br> This file explores and visualizes in different ways the data about citations.
