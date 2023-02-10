@@ -201,6 +201,7 @@ Don't forget to give the project a star! Thanks again!
 ## Contact
 
 Alessandro Tavazzi - tavazale@gmail.com
+LinkedIn - [https://www.linkedin.com/in/alessandro-tavazzi-237bb1201/](https://www.linkedin.com/in/alessandro-tavazzi-237bb1201/)
 
 Project Link: [https://github.com/technometrics-lab/Proximity-indices-applied-to-OpenAlex](https://github.com/technometrics-lab/Proximity-indices-applied-to-OpenAlex)
 
