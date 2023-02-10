@@ -171,7 +171,7 @@ Give a list of all the libraries required to run my work.
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
 1. Download all the folders in your laptop
-2. Download manually "m4_monthly_scaled.pkl" and "m4_monthly_scaled.pkl" from https://github.com/unit8co/amld2022-forecasting-and-metalearning/tree/main/data and to put them in the folder called "indices_proximity". These files are used then for the transfer learning part and I could not download them automatically, because of some technical problems.
+2. Download manually "m4_monthly.pkl" and "m4_monthly_scaled.pkl" from https://github.com/unit8co/amld2022-forecasting-and-metalearning/tree/main/data and to put them in the folder called "indices_proximity". These files are used then for the transfer learning part and I could not download them automatically, because of some technical problems.
 3. Download all the libraries mentionned above.
 4. Once this is done, one can simply run the main directory file and then all the files are ran. Note that the whole computations might take approximately a week to be run.
 
