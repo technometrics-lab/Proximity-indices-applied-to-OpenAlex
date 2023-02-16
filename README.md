@@ -69,8 +69,8 @@ Nevertheless, some libraries must be installed before running the main directory
 
 * Darts [-->][darts]
 * Sktime [-->][sktime]
-* Scipy [-->][scipy]
-* Keybert [-->][keybert]
+* SciPy [-->][scipy]
+* KeyBERT [-->][keybert]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
